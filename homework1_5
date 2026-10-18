@@ -1,0 +1,36 @@
+import numpy as np
+a = list(map(int, input().split()))
+a = sorted(a)
+b = []
+c = []
+M = 0
+K1 = 0
+K3 = 0
+Mpy = 0
+K1py = 0
+K3py = 0
+num = 0
+i = 0
+count = len(a)
+if count % 2 == 1:
+    M = a[(count+1)//2-1]
+else:
+    M = (a[count//2-1]+a[(count+2)//2-1])/2
+    b = a[:count//2]
+    c = a[count//2:]
+    countb = len(b)
+    countc = len(c)
+    if countb % 2 == 1:
+        K1 = b[(countb+1)//2-1]
+    else:
+        K1 = (b[countb//2-1]+b[(countb+2)//2-1])/2
+    if countc % 2 == 1:
+        K3 = c[(countc+1)//2-1]
+    else:
+        K3 = (c[countc//2-1]+c[(countc+2)//2-1])/2
+apy = np.array(a)
+Mpy = np.median(apy)
+K1py = np.quantile(apy,0.25)
+K3py = np.quantile(apy,0.75)
+print(M, K1, K3)
+print(Mpy, K1py, K3py)
