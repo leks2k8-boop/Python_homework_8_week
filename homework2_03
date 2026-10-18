@@ -1,0 +1,25 @@
+import csv
+
+a = []
+a101 = []
+a102 = []
+count = count101 = count102 = 0
+imax = -1
+with open('output.csv', 'r', encoding='utf-8') as f:
+    reader = csv.reader(f)
+    next(reader)
+    for name,group,score in reader:
+        if int(group) == 101:
+            count101 += 1
+            a101.append(int(score))
+        if int(group) == 102:
+            count102 += 1
+            a102.append(int(score))
+        a.append(int(score))
+        count += 1
+        if int(score) >= imax:
+            imax = int(score)
+            Name = name
+print(sum(a)/count,Name)
+print(sum(a101)/count101, "101 группа")
+print(sum(a102)/count102, "102 группа")
