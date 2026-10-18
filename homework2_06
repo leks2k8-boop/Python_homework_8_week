@@ -1,0 +1,16 @@
+import pathlib as pl
+count_file = 0
+count_dir = 0
+py_file = []
+weith = 0
+string = input()
+file_path = pl.Path(string)
+for i in pl.Path(file_path).iterdir():
+    if i.is_file():
+        count_file += 1
+    else:
+        count_dir += 1
+    if i.suffix == ".py":
+        py_file.append(i)
+    weith += i.stat().st_size
+print(weith,count_file,count_dir,py_file)
