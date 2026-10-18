@@ -1,0 +1,22 @@
+import re
+
+all_users = []
+str_err = []
+err_users = []
+
+with open("numbers.txt") as f:
+    for line in f:
+        result_1 = re.search(r'\d+', line)
+        result_2 = re.match(r'\w+', line)
+        if result_2.group() == "ERROR":
+            err_users.append(result_1.group())
+            str_err.append(line)
+        else:
+            all_users.append(result_1.group())
+for user in all_users:
+    print(user,end = ' ')
+print()
+for err in str_err:
+    print(err,end = '')
+for user in err_users:
+    print(user,end = ' ')
