@@ -1,0 +1,13 @@
+import csv
+a = []
+with open("output.csv", "r",encoding='utf-8') as file:
+    reader = csv.reader(file)
+    header = next(reader)
+    for n,c,p in csv.reader(file):
+        if int(p) > 100:
+            a.append([n,c,p])
+
+with open("new_output.csv", "w",encoding='utf-8',newline='') as file:
+    writer = csv.writer(file)
+    for i in a:
+        writer.writerow(i)
