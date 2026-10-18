@@ -1,0 +1,20 @@
+summ = 0
+count = 0
+imin = 10**20
+imax = -10**20
+with open("numbers.txt", "r") as file:
+    for line in file:
+        try:
+            int(line)
+        except ValueError:
+            continue
+        if int(line) < imin:
+            imin = int(line)
+        if int(line) > imax:
+            imax = int(line)
+        count += 1
+        summ += int(line)
+with open("result.txt", "w") as file:
+    file.write(str(imin) + "\n")
+    file.write(str(imax) + "\n")
+    file.write(str(summ/count) + "\n")
