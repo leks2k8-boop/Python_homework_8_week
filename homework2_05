@@ -1,0 +1,15 @@
+import json
+name_max = ''
+imax = 0
+with open('scratch.json','r',encoding='utf-8') as f:
+    data = json.load(f)
+for i in data:
+    if i['score'] > imax:
+        imax = i['score']
+        name_max = i['name']
+    if i['score'] < 60:
+        i['passed'] = '-'
+    else:
+        i['passed'] = '+'
+print(name_max)
+print(data)
