@@ -1,0 +1,49 @@
+from faker import Faker
+fake = Faker()
+file = open('data/text.txt', 'w')
+text = fake.text(200000)
+file.write(text)
+file.close()
+file = open('data/text.txt', 'r')
+count_sentence = 0
+count_space = 0
+max_world = 0
+max_len = 0
+a = []
+max_count = 0
+unic = 0
+words = 0
+count = 0
+max_words = 0
+e = ''
+for line in file:
+    for word in line:
+        if word == '.':
+            words += 1
+            if words>max_words:
+                max_words = words
+                words = 0
+            else:
+                words = 0
+        if word == ' ':
+            words += 1
+    count_sentence+=line.count('.')
+    count_space+=line.count(' ')
+    for i in line.split('.'):
+        for j in i.split('\n'):
+            for k in j.split():
+                a.append(k)
+for i in range(len(a)):
+    a[i] = a[i].lower()
+for i in range(len(a)):
+    if a.count(a[i])>count:
+        count = a.count(a[i])
+        e = a[i]
+max_world = (count_sentence+count_space)/count_sentence
+s = set(a)
+print('кол-во предложений:',count_sentence)
+print('среднее кол-во слов:',max_world)
+print('частное уникальных от общего:', len(s)/len(a))
+print('максимум слов:',max_words)
+print('частое слово:',e, count)
+file.close()
