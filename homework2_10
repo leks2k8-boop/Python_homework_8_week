@@ -1,0 +1,24 @@
+class InvalidAmountError(Exception):
+    pass
+
+class InsufficientFundsError(Exception):
+    pass
+
+class BankError:
+    def __init__(self, balance, amount):
+        self.balance = balance
+        self.amount = amount
+    def withdraw(self):
+        if self.amount > self.balance:
+            raise InsufficientFundsError("InsufficientFundsError")
+        elif self.balance < 0:
+            raise InvalidAmountError("InvalidAmount")
+        elif self.amount < 0:
+            raise InsufficientFundsError("InvalidAmount")
+        else:
+            self.balance -= self.amount
+            self.amount = 0
+            return self.balance
+a,b = map(int,input().split())
+my = BankError(a,b)
+print(my.withdraw())
