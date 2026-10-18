@@ -1,0 +1,15 @@
+count = 0
+words = 0
+b = []
+c = []
+a = 0
+Len = 0
+with open("numbers.txt", "r") as file:
+    for line in file:
+        count += 1
+        words += len(line.split())
+        b = line.split()
+        for i in b:
+            a += len(i)
+        Len = max(Len,len(line))
+print(words,count,a,Len)
