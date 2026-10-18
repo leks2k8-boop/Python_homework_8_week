@@ -1,0 +1,51 @@
+a = []
+List = []
+s = input()
+num = 0
+Bool = 1
+xx = 0
+yy = 0
+while s != ' ':
+    b = list(map(str, s.split()))
+    a.append(b)
+    s = input()
+    b = []
+for i in range (len(a)):
+    for j in range (len(a[i])):
+        if a[i][j] == '#':
+            continue
+        if a[i][j] == '.':
+            List.append([i,j,-1])
+        if a[i][j] == 'S':
+            List.append([i,j,0])
+        if a[i][j] == 'E':
+            xx = i
+            yy = j
+            List.append([i,j,-1])
+while Bool == 1:
+    Bool = 0
+    for i in range (len(List)):
+        if List[i][2] == num:
+            if List[i][0] > 0:
+                if [List[i][0]-1,List[i][1],-1] in List:
+                    List[List.index([List[i][0]-1,List[i][1],-1])] = [List[i][0]-1,List[i][1],num+1]
+                    Bool = 1
+            if List[i][0] < len(a)-1:
+                if [List[i][0]+1,List[i][1],-1] in List:
+                    List[List.index([List[i][0]+1,List[i][1],-1])] = [List[i][0]+1,List[i][1],num+1]
+                    Bool = 1
+            if List[i][1] > 0:
+                if [List[i][0],List[i][1]-1,-1] in List:
+                    List[List.index([List[i][0],List[i][1]-1,-1])] = [List[i][0],List[i][1]-1,num+1]
+                    Bool = 1
+            if List[i][1] < len(a[0])-1:
+                if [List[i][0],List[i][1]+1,-1] in List:
+                    List[List.index([List[i][0],List[i][1]+1,-1])] = [List[i][0],List[i][1]+1,num+1]
+                    Bool = 1
+    num += 1
+if [xx,yy,-1] in List:
+    print('unreal')
+else:
+    for i in List:
+        if i[0] == xx and i[1] == yy:
+            print(i[2])
