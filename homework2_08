@@ -1,0 +1,14 @@
+filename = input()
+def read_file(filename):
+    try:
+        with open(filename) as f:
+            return f.read()
+    except FileNotFoundError:
+        print("File not found")
+    except PermissionError:
+        print("Permission denied")
+    except IsADirectoryError:
+        print("It's a directory")
+    except OSError:
+        print("OS error")
+print(read_file(filename))
