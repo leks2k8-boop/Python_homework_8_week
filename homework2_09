@@ -1,0 +1,12 @@
+def str_to_number(s):
+    try:
+        return int(s)
+    except ValueError:
+        return float(s)
+
+a = list(map(str,input("введите строчку данных через пробел:").split()))
+for i in a:
+    try:
+        print(str_to_number(i))
+    except ValueError:
+        print("не число")
