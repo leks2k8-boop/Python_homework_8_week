@@ -1,0 +1,52 @@
+class delivery:
+    def __init__(self, name, size, weight):
+        self.name = name
+        self.size = size
+        self.weight = weight
+
+    def shipment(self):
+        pass
+
+
+class CourierDelivery(delivery):
+    def __init__(self, name, size, weight, length):
+        super().__init__(name, size, weight)
+        self.length = length
+
+    def shipment(self):
+        return self.weight * 10 + self.length * 0.25
+
+
+class PostDelivery(delivery):
+    def __init__(self, name, size, weight):
+        super().__init__(name, size, weight)
+
+    def shipment(self):
+        return 100 + self.weight * 10
+
+
+class PickupDelivery(delivery):
+    def __init__(self, name, size, weight):
+        super().__init__(name, size, weight)
+
+    def shipment(self):
+        return 0
+
+
+class order:
+    def __init__(self, cost: int, Shipment: delivery):
+        if cost <= 0:
+            print("Ошибка стоимости")
+        elif not isinstance(Shipment, delivery):
+            print("Ошибка доставки")
+        else:
+            self.cost = cost
+            self.Shipment = Shipment
+
+    def full_cost(self):
+        return self.cost + self.Shipment.shipment()
+
+my_delivery = CourierDelivery("Посылка 1", "Средний", 5, 15)
+my_order = order(2000, my_delivery)
+
+print("Полная стоимость заказа:", my_order.full_cost())
