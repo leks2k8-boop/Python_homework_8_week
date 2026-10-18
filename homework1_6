@@ -1,0 +1,63 @@
+import csv
+import random
+from datetime import datetime, timedelta
+
+start_date = datetime(2006, 1, 30)
+delta = timedelta(days=1)
+
+Category = ['food','salary']
+Type = ['income','expense','expense','expense']
+rows = []
+current_date = start_date
+for i in range(6000):
+    rcategory = random.choice(Category)
+    rtype = random.choice(Type)
+    if rtype == 'income':
+        ramount = random.randint(10000,100000)
+    else:
+        ramount = random.randint(0,30000)
+    if random.randint(0,1) == 0:
+        date = current_date.strftime("%Y-%m-%d")
+    else:
+        current_date += delta
+        date = current_date.strftime("%Y-%m-%d")
+    rows.append([date,rcategory,ramount,rtype])
+
+def creator(rows):
+    hadder = ["date","category","amount","type"]
+    with open('data.csv', 'w',encoding='utf-8',newline="") as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow(hadder)
+        writer.writerows(rows)
+
+creator(rows)
+
+summ_income = 0
+some_expense = 0
+profit = 0
+max_expense = 0
+month_expense = 0
+max_month_expense = 0
+b_now = 0
+with open ('data.csv', 'r',encoding='utf-8') as csvfile:
+    reader = csv.reader(csvfile)
+    next(reader)
+    for date,category,amount,ttype in reader:
+        if ttype == 'income':
+            summ_income += int(amount)
+        if ttype == 'expense':
+            some_expense += int(amount)
+        if ttype == 'expense':
+            if int(amount) > max_expense:
+                max_expense = int(amount)
+        a,b,c = map(int,date.split('-'))
+        if b == b_now:
+            month_expense += int(amount)
+        else:
+            if month_expense > max_month_expense:
+                max_month_expense = month_expense
+            b_now = b
+    if month_expense > max_month_expense:
+        max_month_expense = month_expense
+    profit = summ_income - some_expense
+print(summ_income,some_expense,max_expense,max_month_expense,profit)
