@@ -1,0 +1,17 @@
+imin = inf
+imax = -inf
+summ = 0
+count = 0
+mid_value = 0
+
+with (open("result.txt","r")) as f:
+    for line in f:
+        n = float(line)
+        if imin > n:
+            imin = n
+        if imax < n:
+            imax = n
+        count += 1
+        summ += n
+mid_value = summ / count
+print(imin,imax,summ,count,mid_value)
