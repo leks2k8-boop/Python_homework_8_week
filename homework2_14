@@ -1,0 +1,22 @@
+class log_operation:
+    def __init__(self, name, words):
+        self.name = name
+        self.words = words
+
+    def __enter__(self):
+        with open(self.name, "a") as log:
+            log.write(f"START: {self.words}\n")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        with open(self.name, "a") as log:
+            if exc_type is not None:
+                log.write(f"ERROR: {self.words}\n")
+            else:
+                log.write(f"END: {self.words}\n")
+        return False  
+
+with log_operation("operation.log", "Data processing"):
+    open("operation.log","r").close()
+with log_operation("operation.log", "Data processing"):
+    open("operation.logg","r").close()
