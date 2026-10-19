@@ -1,0 +1,19 @@
+import re
+info = 0
+warn = 0
+err = 0
+a = []
+with (open("result.txt","r")) as file:
+    for line in file:
+        if re.search("INFO",line):
+            info += 1
+        if re.search("WARNING",line):
+            warn += 1
+        if re.search("ERROR",line):
+            err += 1
+            a.append((re.search(r'\d+',line[::-1]).group())[::-1])
+print("INFO:",info)
+print("WARNING:",warn)
+print("ERROR:",err)
+for i in a:
+    print(i)
