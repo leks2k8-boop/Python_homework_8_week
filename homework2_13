@@ -1,0 +1,14 @@
+import time
+
+class timer:
+    def __enter__(self):
+        self.start = time.perf_counter()
+        print("Время начала ",self.start)
+        return self.start
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.end = time.perf_counter()
+        print("Время конца ",self.end)
+        print("Время выполнения процесса ",self.end - self.start)
+
+with timer():
+    print("hello"*100000000)
