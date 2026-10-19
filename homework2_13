@@ -9,6 +9,15 @@ class timer:
         self.end = time.perf_counter()
         print("Время конца ",self.end)
         print("Время выполнения процесса ",self.end - self.start)
+with timer():
+    print("hello"*100000000)
 
+from contextlib import contextmanager
+@contextmanager
+def timer():
+    start = time.perf_counter()
+    yield
+    end = time.perf_counter()
+    print(end-start)
 with timer():
     print("hello"*100000000)
