@@ -1,0 +1,79 @@
+import re
+import json
+import logging
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    filename="app.log",
+    filemode="a",
+    encoding="utf-8",
+)
+logging.info("Старт обработки access.log")
+
+err_4xx = 0
+a = {}
+b = {}
+c = []
+imax = 0
+keymax = ''
+ip_pattern = re.compile(r'\d+\.\d+\.\d+\.+\d+')
+http_pattern = re.compile(r'(GET|POST|PUT|DELETE|PATCH|HEAD|OPTIONS)')
+url_pattern = re.compile(r'(/\S+)')
+code_pattern = re.compile(r"(\d{3})")
+
+try:
+    with (open("access.log", "r") as f):
+        logging.info("Файл access.log успешно открыт")
+        for line in f:
+            logging.debug("Читаю строку: %r", line.rstrip())
+            if re.search(http_pattern, line):
+                if re.search(http_pattern, line).group() not in a:
+                    a[re.search(http_pattern, line).group()] = 1
+                else:
+                    a[re.search(http_pattern, line).group()] += 1
+                logging.debug(
+                    "Метод %s учтён, всего: %d",
+                    re.search(http_pattern, line).group(),
+                    a[re.search(http_pattern, line).group()],
+                )
+            if re.search(url_pattern, line):
+                if re.search(url_pattern, line).group() not in b:
+                    b[re.search(url_pattern, line).group()] = 1
+                else:
+                    b[re.search(url_pattern, line).group()] += 1
+                logging.debug(
+                    "URL %s учтён, всего: %d",
+                    re.search(url_pattern, line).group(),
+                    b[re.search(url_pattern, line).group()],
+                )
+            if re.search(code_pattern, line):
+                if int(re.search(code_pattern, line[::-1]).group()[::-1]) > 400 and int(re.search(code_pattern, line[::-1]).group()[::-1]) < 500:
+                    err_4xx += 1
+                    logging.debug("4xx-ошибка обнаружена")
+
+except FileNotFoundError:
+    print("No access log file found.")
+    logging.error("Файл access.log не найден")
+except Exception:
+    print("error")
+    logging.exception("Неожиданная ошибка при обработке access.log")
+
+logging.info(
+    "Цикл обработки завершён: методов")
+
+for key, value in b.items():
+    if value > imax:
+        imax = value
+        keymax = key
+
+c.append(a)
+c.append(b)
+c.append([err_4xx, f"{keymax} {imax} - most popular"])
+
+logging.info("Статистика собрана:")
+
+with open("scratch.json", "w") as f:
+    json.dump(c, f, indent=4, ensure_ascii=False)
+
+logging.info("Статистика успешно записана в scratch.json")
