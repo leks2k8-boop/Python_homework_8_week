@@ -1,0 +1,8 @@
+import re
+string = input()
+url_pattern_1 =  re.compile(r"(http://+[a-zA-z0-9._]+)")
+url_pattern_2 =  re.compile(r"(https://+[a-zA-z0-9._]+)")
+a = re.findall(url_pattern_1, string)
+b = re.findall(url_pattern_2, string)
+print(a)
+print(b)
