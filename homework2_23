@@ -1,0 +1,13 @@
+import re
+string = input()
+while 1:
+    n = re.sub('  ', ' ', string)
+    if n == string:
+        break
+    else:
+        string = n
+if string[0] == ' ':
+    string = string[1:]
+if string[-1] == ' ':
+    string = string[:-1]
+print(string)
