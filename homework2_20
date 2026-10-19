@@ -1,0 +1,4 @@
+import re
+string = input()
+data_pattern = re.compile(r'(\d{2}.\d{2}.\d{4})')
+print(re.findall(data_pattern, string))
