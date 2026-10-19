@@ -1,0 +1,10 @@
+from io import StringIO
+stream = StringIO("first\nsecond\nthird")
+def count_lines(stream):
+    count = 0
+    for line in stream:
+        count += 1
+    return count
+print(count_lines(stream))
+stream = open("result.txt",'r')
+print(count_lines(stream))
