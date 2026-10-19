@@ -1,0 +1,9 @@
+a = []
+a = set(a)
+email_pattern = re.compile(r'[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}')
+with (open("numbers.txt","r")) as file:
+    for i in file:
+        if email_pattern.search(i):
+            a.add(email_pattern.search(i).group())
+    for i in a:
+        print(i)
